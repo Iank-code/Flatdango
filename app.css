@@ -1,0 +1,60 @@
+*,html{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    /* height: 100%; */
+}
+body .main-section{
+    display: flex;
+    flex-direction: row;
+    margin: 30px 0 20px 0;
+}
+#buy-ticket{
+    outline: none;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 2px 4px;
+    font-weight: 500;
+}
+#buy-ticket:hover{
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+}
+body .main-section .section-1{
+    margin-left: 15px;
+}
+body .main-section .section-1 #show-movies{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 15px;
+}
+body .main-section .section-1 #show-movies h5{
+    font-size: 15px;
+}
+body .main-section .section-1 img{
+    width: 150px;
+    cursor: pointer;
+    margin: 0 10px 10px 0;
+}
+body .main-section .section-1 h1, .section-2 h1{
+    color: red;
+}
+body .main-section .section-2{
+    position: block;
+    overflow: none;
+    width: 45%;
+}
+body .main-section .section-2 img{
+    width: 500px;
+}
+body .main-section .section-2 #movie-info{
+    padding-left: 14em;
+}
+body .main-section .section-2 #movie-info h4{
+    font-size: 17px;
+}
