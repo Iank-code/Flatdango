@@ -22,6 +22,7 @@ cd Flatdango (Optional) Open it in Visual Studio Code code . #Flatdango This web
 Running the application is very straight forward. You can use the following steps to run the app.
 
 Open the folder containtaing the project. Right click on the index.html file Click the option 'Open with Google Chrome'
+You can view this application here https://iank-code.github.io/Flatdango/
 ## Authors
 This project was contributed to by: Ian Kamau
 
