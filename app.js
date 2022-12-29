@@ -1,496 +1,56 @@
 //Global variables
 // const runTimeDisplay = 
-const showTimeDisplay = document.getElementById('showtime')
-const availableTicketsDisplay = document.getElementById('available-tickets')
-const buyTicketBtn = document.getElementById('buy-ticket')
-const movieTitleDisplay = document.getElementById('name-of-movie')
-
+const movieList = document.getElementById('show-movies')
 window.addEventListener('DOMContentLoaded', ()=>{
+    // fetches everything from db.json server
     const fetchMovieList = fetch('/db.json')
     fetchMovieList.then(res => res.json()).then(data => {
-        // creating images
-        // creating first image
-        const firstImg = document.createElement('img')
-        firstImg.src = data.films[0].poster
-
-        // when pressed, it triggers a couple of things
-        firstImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[0].poster
-            let remainingTicket = ((data.films[0].capacity) - (data.films[0].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[0].title
-            document.getElementById('description').textContent = data.films[0].description
-            document.getElementById('runtime').textContent = data.films[0].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[0].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
+        const films = data.films
+        // loops through all the movies
+        films.map(film => {
+            // return the title of all movies
+            const movie = film.title
+            const list = document.createElement('ul')
+            list.innerHTML = `
+                <li>${movie}</li>
+            `
+            list.style.cursor = 'pointer'
+            list.addEventListener('click', () => {
+                return showMovies(film)
             })
-
-            // document.getElementById('movies').appendChild(clickedImage)
-
+            movieList.appendChild(list)
         })
-        const firsth5 = document.createElement('h5')
-        firsth5.textContent = data.films[0].title
-        
-        document.getElementById('img1').appendChild(firstImg)
-        document.getElementById('img1').appendChild(firsth5)
-        
 
+        function showMovies(movie){
+            const movieClicked = document.getElementById('movies')
+            movieClicked.innerHTML = `
+                <img src=${movie.poster}>
+                <h5>${movie.title}</h5>
+                <h5>${movie.description}</h5>
+            `
 
-        // creating second image
-        const secondImg = document.createElement('img')
-        secondImg.src = data.films[1].poster
-
-        // when pressed, it triggers a couple of things
-        secondImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[1].poster
-            let remainingTicket = ((data.films[1].capacity) - (data.films[1].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[1].title
-            document.getElementById('description').textContent = data.films[1].description
-            document.getElementById('runtime').textContent = data.films[1].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[1].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
+            getOtherInfo(movie)
+        }
+        function getOtherInfo(movie){
+            const otherInfo = document.getElementById('movie-info')
+            let bal = movie.capacity - movie.tickets_sold
+            otherInfo.innerHTML = `
+                <h4>Run Time: ${movie.runtime}</h4>
+                <h4>Show Time: ${movie.showtime}</h4>
+                <h4>Available Tickets: <span id='remain'>${bal}</span></h4>
+                <button id=buyTicket>Buy Ticket</button>
+            `
+            const btn = document.getElementById('buyTicket')
+            btn.addEventListener('click', ()=>{
+                return buyTicket(bal)
             })
+        }
 
-        })
-        const secondh5 = document.createElement('h5')
-        secondh5.textContent = data.films[1].title
+        function buyTicket(bal){
+            const remain = document.getElementById('remain')
+            remain.textContent = bal--;
+            console.log(bal--)
+        }
 
-        document.getElementById('img2').appendChild(secondImg)
-        document.getElementById('img2').appendChild(secondh5)
-
-
-
-        // creating third image
-        const thirdImg = document.createElement('img')
-        thirdImg.src = data.films[2].poster
-
-        // when pressed, it triggers a couple of things
-        thirdImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[2].poster
-            let remainingTicket = ((data.films[2].capacity) - (data.films[2].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[2].title
-            document.getElementById('description').textContent = data.films[2].description
-            document.getElementById('runtime').textContent = data.films[2].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[2].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const thirdh5 = document.createElement('h5')
-        thirdh5.textContent = data.films[2].title
-
-        document.getElementById('img2').appendChild(thirdImg)
-        document.getElementById('img2').appendChild(thirdh5)
-
-
-
-        // creating fourth image
-        const fourthImg = document.createElement('img')
-        fourthImg.src = data.films[3].poster
-
-        // when pressed, it triggers a couple of things
-        fourthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[3].poster
-            let remainingTicket = ((data.films[3].capacity) - (data.films[3].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[3].title
-            document.getElementById('description').textContent = data.films[3].description
-            document.getElementById('runtime').textContent = data.films[3].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[3].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const fourthh5 = document.createElement('h5')
-        fourthh5.textContent = data.films[3].title
-
-        document.getElementById('img2').appendChild(fourthImg)
-        document.getElementById('img2').appendChild(fourthh5)
-
-
-
-        // creating fifth image
-        const fifthImg = document.createElement('img')
-        fifthImg.src = data.films[4].poster
-
-        // when pressed, it triggers a couple of things
-        fifthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[4].poster
-            let remainingTicket = ((data.films[4].capacity) - (data.films[4].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[4].title
-            document.getElementById('description').textContent = data.films[4].description
-            document.getElementById('runtime').textContent = data.films[4].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[4].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        
-        const fifthh5 = document.createElement('h5')
-        fifthh5.textContent = data.films[4].title
-
-        document.getElementById('img2').appendChild(fifthImg)
-        document.getElementById('img2').appendChild(fifthh5)
-
-        // creating sixth image
-        const sixthImg = document.createElement('img')
-        sixthImg.src = data.films[5].poster
-
-        // when pressed, it triggers a couple of things
-        sixthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[5].poster
-            let remainingTicket = ((data.films[5].capacity) - (data.films[5].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[5].title
-            document.getElementById('description').textContent = data.films[5].description
-            document.getElementById('runtime').textContent = data.films[5].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[5].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const sixthh5 = document.createElement('h5')
-        sixthh5.textContent = data.films[5].title
-
-        document.getElementById('img2').appendChild(sixthImg)
-        document.getElementById('img2').appendChild(sixthh5)
-
-
-
-        // creating seventh image
-        const seventhImg = document.createElement('img')
-        seventhImg.src = data.films[6].poster
-
-        // when pressed, it triggers a couple of things
-        seventhImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[6].poster
-            let remainingTicket = ((data.films[6].capacity) - (data.films[6].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[6].title
-            document.getElementById('description').textContent = data.films[6].description
-            document.getElementById('runtime').textContent = data.films[6].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[6].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const seventhh5 = document.createElement('h5')
-        seventhh5.textContent = data.films[6].title
-
-        document.getElementById('img2').appendChild(seventhImg)
-        document.getElementById('img2').appendChild(seventhh5)
-
-
-
-        // creating eigth image
-        const eigthImg = document.createElement('img')
-        eigthImg.src = data.films[7].poster
-
-        // when pressed, it triggers a couple of things
-        eigthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[7].poster
-            let remainingTicket = ((data.films[7].capacity) - (data.films[7].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[7].title
-            document.getElementById('description').textContent = data.films[7].description
-            document.getElementById('runtime').textContent = data.films[7].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[7].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const eigthh5 = document.createElement('h5')
-        eigthh5.textContent = data.films[7].title
-        document.getElementById('img2').appendChild(eigthImg)
-        document.getElementById('img2').appendChild(eigthh5)
-
-
-
-        // creating ninth image
-        const ninthImg = document.createElement('img')
-        ninthImg.src = data.films[8].poster
-
-        // when pressed, it triggers a couple of things
-        ninthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[8].poster
-            let remainingTicket = ((data.films[8].capacity) - (data.films[8].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[8].title
-            document.getElementById('description').textContent = data.films[8].description
-            document.getElementById('runtime').textContent = data.films[8].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[8].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const ninthh5 = document.createElement('h5')
-        ninthh5.textContent = data.films[8].title
-        document.getElementById('img2').appendChild(ninthImg)
-        document.getElementById('img2').appendChild(ninthh5)
-
-
-
-        // creating tenth image
-        const tenthImg = document.createElement('img')
-        tenthImg.src = data.films[9].poster
-
-        // when pressed, it triggers a couple of things
-        tenthImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[9].poster
-            let remainingTicket = ((data.films[9].capacity) - (data.films[9].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[9].title
-            document.getElementById('description').textContent = data.films[9].description
-            document.getElementById('runtime').textContent = data.films[9].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[9].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const tenthh5 = document.createElement('h5')
-        tenthh5.textContent = data.films[9].title
-        document.getElementById('img2').appendChild(tenthImg)
-        document.getElementById('img2').appendChild(tenthh5)
-
-
-
-        // creating eleventh image
-        const eleventhImg = document.createElement('img')
-        eleventhImg.src = data.films[10].poster
-
-        // when pressed, it triggers a couple of things
-        eleventhImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[10].poster
-            let remainingTicket = ((data.films[10].capacity) - (data.films[10].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[10].title
-            document.getElementById('description').textContent = data.films[10].description
-            document.getElementById('runtime').textContent = data.films[10].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[10].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const eleventhh5 = document.createElement('h5')
-        eleventhh5.textContent = data.films[10].title
-        document.getElementById('img2').appendChild(eleventhImg)
-        document.getElementById('img2').appendChild(eleventhh5)
-
-
-
-        // creating twelve image
-        const twelveImg = document.createElement('img')
-        twelveImg.src = data.films[11].poster
-
-        // when pressed, it triggers a couple of things
-        twelveImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[11].poster
-            let remainingTicket = ((data.films[11].capacity) - (data.films[11].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[11].title
-            document.getElementById('description').textContent = data.films[11].description
-            document.getElementById('runtime').textContent = data.films[11].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[11].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const twelveh5 = document.createElement('h5')
-        twelveh5.textContent = data.films[11].title
-        document.getElementById('img2').appendChild(twelveImg)
-        document.getElementById('img2').appendChild(twelveh5)
-
-        // creating thirteen image
-        const thirteenImg = document.createElement('img')
-        thirteenImg.src = data.films[12].poster
-
-        // when pressed, it triggers a couple of things
-        thirteenImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[12].poster
-            let remainingTicket = ((data.films[12].capacity) - (data.films[12].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[12].title
-            document.getElementById('description').textContent = data.films[12].description
-            document.getElementById('runtime').textContent = data.films[12].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[12].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const thirteenh5 = document.createElement('h5')
-        thirteenh5.textContent = data.films[12].title
-        document.getElementById('img2').appendChild(thirteenImg)
-        document.getElementById('img2').appendChild(thirteenh5)
-
-
-
-        // creating fourteen image
-        const fourteenImg = document.createElement('img')
-        fourteenImg.src = data.films[13].poster
-
-        // when pressed, it triggers a couple of things
-        fourteenImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[13].poster
-            let remainingTicket = ((data.films[13].capacity) - (data.films[13].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[13].title
-            document.getElementById('description').textContent = data.films[13].description
-            document.getElementById('runtime').textContent = data.films[13].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[13].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const fourteenh5 = document.createElement('h5')
-        fourteenh5.textContent = data.films[13].title
-        document.getElementById('img2').appendChild(fourteenImg)
-        document.getElementById('img2').appendChild(fourteenh5)
-
-
-
-        // creating fifteen image
-        const fifteenImg = document.createElement('img')
-        fifteenImg.src = data.films[14].poster
-
-        // when pressed, it triggers a couple of things
-        fifteenImg.addEventListener('click', ()=> {
-            document.getElementById('image').src = data.films[14].poster
-            let remainingTicket = ((data.films[14].capacity) - (data.films[14].tickets_sold))
-            // displays runtime
-            movieTitle.textContent = data.films[14].title
-            document.getElementById('description').textContent = data.films[14].description
-            document.getElementById('runtime').textContent = data.films[14].runtime
-            // displays showtime
-            document.getElementById('showtime').textContent = data.films[14].showtime
-
-            // Displays remaining tickets
-            document.getElementById('available-tickets').textContent = remainingTicket
-
-            // when the user buys a ticket, it will deduct the Available Tickets && show the remaining
-
-            document.getElementById('buy-ticket').addEventListener('click', ()=>{
-                document.getElementById('available-tickets').textContent = remainingTicket--
-            })
-
-        })
-        const fifteenh5 = document.createElement('h5')
-        fifteenh5.textContent = data.films[14].title
-        document.getElementById('img2').appendChild(fifteenImg)
-        document.getElementById('img2').appendChild(fifteenh5)
     })
 })
