@@ -42,14 +42,16 @@ window.addEventListener('DOMContentLoaded', ()=>{
             `
             const btn = document.getElementById('buyTicket')
             btn.addEventListener('click', ()=>{
-                return buyTicket(bal)
+                return buyTicket(bal--, btn)
             })
         }
 
-        function buyTicket(bal){
+        function buyTicket(bal, btn){
             const remain = document.getElementById('remain')
-            remain.textContent = bal--;
-            console.log(bal--)
+            if(bal === 0){
+                btn.disabled = true
+            }
+            return remain.textContent = bal;
         }
 
     })
