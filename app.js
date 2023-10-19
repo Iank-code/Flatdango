@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     fetchMovieList.then(res => res.json()).then(data => {
         const films = data.films
         // loops through all the movies
-        films.map(film => {
+        films && films.map(film => {
             // return the title of all movies
             const movie = film.title
             const list = document.createElement('ul')
